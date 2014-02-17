@@ -164,6 +164,9 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
               <span id="notifications"></span>
               <span class="notifier-box"></span>
             </li>
+            <li>
+              <div id="hangouts-placeholder"></div>
+            </li>
           </ul>
           <ul class="right-nav">
             <li>
@@ -378,6 +381,16 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
     -->
     <script src="/juju-ui/assets/all-yui.js"></script>
     <script src="/juju-ui/assets/modules.js"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <script>
+      gapi.hangout.render('hangouts-placeholder', {
+        'render': 'createhangout',
+        'initial_apps': [{
+          'app_id' : '530903727887',
+          'start_data' : '{ "hostUrl": "' + window.location.href +'" }',
+          'app_type' : 'ROOM_APP' }]
+      });
+    </script>
     <script>
       // Now that all of the above JS is loaded we can define the real start
       // function which will be picked up by the setTimeout, and the app will

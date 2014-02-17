@@ -381,7 +381,9 @@ YUI.add('juju-gui', function(Y) {
         if (socketPort || socketProtocol) {
           // Assemble a socket URL from the Location.
           var loc = Y.getLocation();
-          var hostname = this.get('hostUrl') || loc.hostname;
+          var hostUrl = this.get('hostUrl');
+
+          var hostname = hostUrl && hostUrl.split('//')[1] || loc.hostname;
           socketPort = socketPort || loc.port;
           socketProtocol = socketProtocol || 'wss';
           socketUrl = socketProtocol + '://' + hostname;

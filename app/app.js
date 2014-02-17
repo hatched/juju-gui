@@ -383,7 +383,8 @@ YUI.add('juju-gui', function(Y) {
           var loc = Y.getLocation();
           var hostUrl = this.get('hostUrl');
 
-          var hostname = hostUrl && hostUrl.split('//')[1] || loc.hostname;
+          var hostname = hostUrl && hostUrl.split('//')[1].split('/')[0] ||
+              loc.hostname;
           socketPort = socketPort || loc.port;
           socketProtocol = socketProtocol || 'wss';
           socketUrl = socketProtocol + '://' + hostname;

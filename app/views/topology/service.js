@@ -219,12 +219,13 @@ YUI.add('juju-topology-service', function(Y) {
     var exposed = node.filter(function(d) {
       return d.exposed;
     });
+    var hostUrl = self.get('hostUrl') || '/';
     exposed.each(function(d) {
       var existing = Y.one(this).one('.exposed-indicator');
       if (!existing) {
         existing = d3.select(this).append('image')
                         .attr({'class': 'exposed-indicator on',
-              'xlink:href': '/juju-ui/assets/svgs/exposed.svg',
+              'xlink:href': hostUrl + 'juju-ui/assets/svgs/exposed.svg',
               'width': 32,
               'height': 32
             })
@@ -1117,6 +1118,7 @@ YUI.add('juju-topology-service', function(Y) {
      * @method createServiceNode
      */
     createServiceNode: function(node, self) {
+      var hostUrl = self.get('hostUrl') || '/';
       node.append('image')
       .classed('service-block-image', true);
 
@@ -1124,7 +1126,7 @@ YUI.add('juju-topology-service', function(Y) {
        .classed('service-icon', true)
        .attr({
                 'xlink:href': function(d) {
-                  return d.icon;
+                  return hostUrl + d.icon;
                 },
                 width: 96,
                 height: 96,

@@ -345,6 +345,7 @@ YUI.add('juju-view-environment', function(Y) {
           env: this.get('env'),
           db: this.get('db'),
           store: this.get('store'),
+          hostUrl: this.get('hostUrl'),
           getInspector: Y.bind(this.getInspector, this),
           setInspector: Y.bind(this.setInspector, this),
           createServiceInspector: Y.bind(this.createServiceInspector, this),

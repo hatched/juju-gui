@@ -1118,7 +1118,6 @@ YUI.add('juju-topology-service', function(Y) {
      * @method createServiceNode
      */
     createServiceNode: function(node, self) {
-      var hostUrl = self.get('hostUrl') || '/';
       node.append('image')
       .classed('service-block-image', true);
 
@@ -1126,7 +1125,7 @@ YUI.add('juju-topology-service', function(Y) {
        .classed('service-icon', true)
        .attr({
                 'xlink:href': function(d) {
-                  return hostUrl + d.icon;
+                  return d.icon;
                 },
                 width: 96,
                 height: 96,

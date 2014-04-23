@@ -25,6 +25,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
   <!-- Load test runner/environment -->
   <script src="assets/chai.js"></script>
   <script src="assets/mocha.js"></script>
+  <script src="assets/blanket-1-1-5.min.js" data-cover-adapter="assets/mocha-blanket.js"></script>
   <script>
     // Default window.flags to an empty object.
     window.flags = {};
@@ -34,7 +35,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
     var assert = chai.assert,
         expect = chai.expect,
         should = chai.should();
-    mocha.reporter('html');
+    //mocha.reporter('html');
     mocha.ui('bdd');
     mocha.setup({ignoreLeaks: false, timeout: TIMEOUT});
 
@@ -72,11 +73,12 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
   <script src="/juju-ui/assets/javascripts/spin.min.js"></script>
   <script src="utils.js"></script>
   <script src="factory.js"></script>
+  <script src="/juju-ui/app.js" data-cover></script>
 
   <!-- Tests (Alphabetical) -->
 
   <script src="test_app.js"></script>
-  <script src="test_app_hotkeys.js"></script>
+  <!--<script src="test_app_hotkeys.js"></script>
   <script src="test_application_notifications.js"></script>
   <script src="test_browser_app.js"></script>
   <script src="test_browser_charm_details.js"></script>
@@ -95,7 +97,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
   <script src="test_token_drag_and_drop.js"></script>
 
   <!-- FIXME: tests flicker, add container. -->
-  <script src="test_conflict_ux.js"></script>
+  <!--<script src="test_conflict_ux.js"></script>
   <script src="test_console.js"></script>
   <script src="test_container_token.js"></script>
   <script src="test_cookies_app_extension.js"></script>
@@ -135,7 +137,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
   <script src="test_machine_view_panel_header.js"></script>
 
   <!-- FIXME: latter three modules depend on side effects from model tests. -->
-  <script src="test_model.js"></script>
+  <!--<script src="test_model.js"></script>
   <script src="test_model_bundle.js"></script>
   <script src="test_model_controller.js"></script>
   <script src="test_onboarding.js"></script>
@@ -147,13 +149,13 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <!-- FIXME: test "should destroy notifications after N milliseconds"
       failed once in Jenkins CI, retrying submission. -->
-  <script src="test_notifier_widget.js"></script>
+  <!--<script src="test_notifier_widget.js"></script>
 
   <!-- FIXME: intermittent test failure under "make test-server" and Chromium -
       position matches on setBusy: expected 100 to equal 109.09090423583984 -->
-  <script src="test_overlay_indicator.js"></script>
+  <!--<script src="test_overlay_indicator.js"></script>
 
-  <script src="test_panzoom.js"></script>
+  <!--<script src="test_panzoom.js"></script>
   <script src="test_prettify.js"></script>
   <script src="test_resizing_textarea.js"></script>
   <script src="test_request_series_inspector.js"></script>
@@ -164,12 +166,12 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
   <script src="test_sandbox_python.js"></script>
 
   <!-- FIXME: tests leave DOM elements behind. -->
-  <script src="test_service_module.js"></script>
+  <!--<script src="test_service_module.js"></script>
 
   <script src="test_simulator.js"></script>
 
   <!-- FIXME: feature flags depend on code loaded by the startup test. -->
-  <script src="test_startup.js"></script>
+  <!--<script src="test_startup.js"></script>
   <script src="test_feature_flags.js"></script>
 
   <script src="test_sub_app.js"></script>
@@ -188,7 +190,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
   <script src="test_web_sandbox.js"></script>
   <script src="test_zip_utils.js"></script>
 
-  <script src="test_cleanup.js"></script>
+  <script src="test_cleanup.js"></script>-->
 
   <script>
   YUI_config = {

@@ -121,7 +121,7 @@ endif
 endif
 
 ### End of release-specific variables ###
-TEMPLATE_TARGETS=$(shell find app -type f -regextype posix-extended -regex '.+\.(handlebars|partial)')
+TEMPLATE_TARGETS=$(shell find app -type f -regextype posix-extended -regex '.+\.(handlebars|partial|jsx)')
 
 CSS_TARGETS=$(shell find lib/views -type f -name '*.less') \
     $(shell find app/assets/css -type f -name '*.scss')

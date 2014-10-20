@@ -164,33 +164,44 @@ YUI.add('juju-charmbrowser', function(Y) {
       // so that we can render the token containers to the DOM as they're
       // generated.
       charmList.append(content);
-
       tokenTypes.forEach(function(tokenType) {
-        tokenContainer = new TokenContainer({
-          name: tokenType,
-          cutoff: this.curatedQtys[tokenType],
-          children: results[tokenType].map(function(charm) {
-            return charm.getAttrs();
-          }),
-          side: 'small',
-          isDraggable: true
-        });
-        // Render the token container to the DOM as it is generated in order
-        // to reduce visible lag as the browser works on generating each
-        // token.
-        tokenContainer.render(charmList.one('.' + tokenType));
-        tokenContainers.push(tokenContainer);
+        React.renderComponent(
+            Y.juju.widgets.browser.ReactTokenContainer({
+              name: tokenType,
+              cutoff: this.curatedQtys[tokenType],
+              results: results[tokenType].map(function(charm) {
+                return charm.getAttrs()
+              }),
+              size: 'small',
+              isDraggable: true
+            }),
+            charmList.one('.' + tokenType).getDOMNode());
+
+        // tokenContainer = new TokenContainer({
+        //   name: tokenType,
+        //   cutoff: this.curatedQtys[tokenType],
+        //   children: results[tokenType].map(function(charm) {
+        //     return charm.getAttrs();
+        //   }),
+        //   side: 'small',
+        //   isDraggable: true
+        // });
+        // // Render the token container to the DOM as it is generated in order
+        // // to reduce visible lag as the browser works on generating each
+        // // token.
+        // tokenContainer.render(charmList.one('.' + tokenType));
+        // tokenContainers.push(tokenContainer);
       }, this);
 
-      this.tokenContainers = tokenContainers;
+      // this.tokenContainers = tokenContainers;
       this.hideIndicator(charmList);
-      // Set the active charm if available.
-      var active = this.get('activeID');
-      if (active) {
-        this.updateActive(
-            charmList.one('.token[data-charmid="' + active + '"]'));
-      }
-      this._makeStickyHeaders();
+      // // Set the active charm if available.
+      // var active = this.get('activeID');
+      // if (active) {
+      //   this.updateActive(
+      //       charmList.one('.token[data-charmid="' + active + '"]'));
+      // }
+      // this._makeStickyHeaders();
     },
 
     /**
@@ -474,6 +485,7 @@ YUI.add('juju-charmbrowser', function(Y) {
     'juju-view-utils',
     'querystring',
     'search-widget-mgmt-extension',
-    'view'
+    'view',
+    'react-browser-token-container'
   ]
 });

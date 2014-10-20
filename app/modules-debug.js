@@ -143,6 +143,10 @@ var GlobalConfig = {
           fullpath: '/juju-ui/widgets/token-container.js'
         },
 
+        'react-browser-token-container': {
+          fullpath: '/juju-ui/subapps/browser/views/react-token-container.js'
+        },
+
         'browser-filter-widget': {
           fullpath: '/juju-ui/widgets/filter.js'
         },

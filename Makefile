@@ -1,8 +1,23 @@
 SHELL = /bin/sh
 .DEFAULT_GOAL := all
 
+BUILDDIR := build/
+GUIBUILDDIR := build/gui/
+RAWJSFILES := $(shell find app -name '*.js')
+BUILT_RAWJSFILES := $(patsubst %, $(GUIBUILDDIR)%, $(RAWJSFILES))
+
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
+
+$(GUIBUILDDIR): $(BUILDDIR)
+	mkdir -p $(GUIBUILDDIR)
+
+$(GUIBUILDDIR)%.js: %.js
+	mkdir -p $(@D)
+	cp $^ $(@D)
+
 .PHONY: all
-all: sysdeps deps
+all: sysdeps deps $(GUIBUILDDIR) $(BUILT_RAWJSFILES)
 	# Default target
 
 .PHONY: help
@@ -30,7 +45,7 @@ check:
 
 .PHONY: clean
 clean:
-	# Clean all target
+	rm -rf $(BUILDDIR)
 
 .PHONY: clean-all
 clean-all:

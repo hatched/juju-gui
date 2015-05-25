@@ -2,23 +2,34 @@ SHELL = /bin/sh
 .DEFAULT_GOAL := all
 
 BUILDDIR := build/
-GUIBUILDDIR := build/gui/
+GUIBUILDDIR := $(BUILDDIR)gui/
 RAWJSFILES := $(shell find app -name '*.js')
 BUILT_RAWJSFILES := $(patsubst %, $(GUIBUILDDIR)%, $(RAWJSFILES))
 
+define colorecho
+	@tput setaf 2
+	@echo $(1)
+	@tput sgr0
+endef
+
 $(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+	@echo -n "Generating build directory. "
+	@mkdir -p $(BUILDDIR)
+	$(call colorecho,"Done.")
 
 $(GUIBUILDDIR): $(BUILDDIR)
-	mkdir -p $(GUIBUILDDIR)
+	@echo -n "Generating GUI build directory. "
+	@mkdir -p $(GUIBUILDDIR)
+	$(call colorecho,"Done.")
 
 $(GUIBUILDDIR)%.js: %.js
-	mkdir -p $(@D)
-	cp $^ $(@D)
+	@echo -n "Creating $^. "
+	@mkdir -p $(@D)
+	@cp $^ $(@D)
+	$(call colorecho,"Done.")
 
 .PHONY: all
 all: sysdeps deps $(GUIBUILDDIR) $(BUILT_RAWJSFILES)
-	# Default target
 
 .PHONY: help
 help:
@@ -33,11 +44,11 @@ help:
 
 .PHONY: sysdeps
 sysdeps:
-	# Install system dependencies
+	@echo "Installing system dependencies."
 
 .PHONY: deps
 deps:
-	# Install application dependencies
+	@echo "Installing application dependencies."
 
 .PHONY: check
 check:
@@ -45,11 +56,13 @@ check:
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILDDIR)
+	@echo "Removing built files."
+	@rm -rf $(BUILDDIR)
+	$(call colorecho,"Done.")
 
 .PHONY: clean-all
-clean-all:
-	# Clean-all target
+clean-all: clean
+	@echo "Removing application dependencies and built files."
 
 .PHONY: dist
 dist:

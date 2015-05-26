@@ -5,6 +5,9 @@ BUILDDIR := build/
 GUIBUILDDIR := $(BUILDDIR)gui/
 RAWJSFILES := $(shell find app -name '*.js')
 BUILT_RAWJSFILES := $(patsubst %, $(GUIBUILDDIR)%, $(RAWJSFILES))
+# -regextype is not supported on OSX, it needs to use -E instead.
+TEMPLATE_FILES := $(shell find app -type f -regextype posix-extended -regex '.+\.(handlebars|partial)')
+TEMPLATES_FILE := build/templates.js
 
 define colorecho
 	@tput setaf 2
@@ -28,8 +31,12 @@ $(GUIBUILDDIR)%.js: %.js
 	@cp $^ $(@D)
 	$(call colorecho,"Done.")
 
+$(TEMPLATES_FILE): $(TEMPLATE_FILES) $(GUIBUILDDIR)
+	@echo "Generating templates. "
+	@bin/generateTemplates
+
 .PHONY: all
-all: sysdeps deps $(GUIBUILDDIR) $(BUILT_RAWJSFILES)
+all: sysdeps deps $(GUIBUILDDIR) $(BUILT_RAWJSFILES) templates
 
 .PHONY: help
 help:
@@ -50,13 +57,17 @@ sysdeps:
 deps:
 	@echo "Installing application dependencies."
 
+.PHONY: templates
+templates: $(TEMPLATES_FILE)
+	$(call colorecho,"Done.")
+
 .PHONY: check
 check:
 	# Lint target
 
 .PHONY: clean
 clean:
-	@echo "Removing built files."
+	@echo -n "Removing built files. "
 	@rm -rf $(BUILDDIR)
 	$(call colorecho,"Done.")
 

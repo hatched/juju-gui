@@ -79,6 +79,10 @@ templates: $(TEMPLATES_FILE)
 css: $(CSS_FILE)
 	$(call colorecho,"Done.")
 
+.PHONY: devel
+devel: $(BUILT_RAWJSFILES)
+	node server.js
+
 .PHONY: check
 check:
 	# Lint target

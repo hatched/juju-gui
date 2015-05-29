@@ -125,206 +125,207 @@ var GlobalConfig = {
     },
 
     juju: {
+      base: '/juju-ui',
       modules: {
         // Primitives
         'yui-patches': {
-          fullpath: '/juju-ui/assets/javascripts/yui-patches.js'
+          path: '/assets/javascripts/yui-patches.js'
         },
 
         'notifier': {
-          fullpath: '/juju-ui/widgets/notifier.js'
+          path: '/widgets/notifier.js'
         },
 
         'browser-token': {
-          fullpath: '/juju-ui/widgets/token.js'
+          path: '/widgets/token.js'
         },
 
         'browser-token-container': {
-          fullpath: '/juju-ui/widgets/token-container.js'
+          path: '/widgets/token-container.js'
         },
 
         'browser-filter-widget': {
-          fullpath: '/juju-ui/widgets/filter.js'
+          path: '/widgets/filter.js'
         },
 
         'browser-overlay-indicator': {
-          fullpath: '/juju-ui/widgets/overlay-indicator.js'
+          path: '/widgets/overlay-indicator.js'
         },
 
         'browser-search-widget': {
-          fullpath: '/juju-ui/widgets/charm-search.js'
+          path: '/widgets/charm-search.js'
         },
 
         'browser-tabview': {
-          fullpath: '/juju-ui/widgets/browser-tabview.js'
+          path: '/widgets/browser-tabview.js'
         },
 
         'juju-inspector-widget': {
-          fullpath: '/juju-ui/widgets/inspector-widget.js'
+          path: '/widgets/inspector-widget.js'
         },
         'juju-databinding': {
-          fullpath: '/juju-ui/views/databinding.js'
+          path: '/views/databinding.js'
         },
         'reconnecting-websocket': {
-          fullpath: '/juju-ui/assets/javascripts/reconnecting-websocket.js'
+          path: '/assets/javascripts/reconnecting-websocket.js'
         },
 
         'ns-routing-app-extension': {
-          fullpath: '/juju-ui/assets/javascripts/ns-routing-app-extension.js'
+          path: '/assets/javascripts/ns-routing-app-extension.js'
         },
 
         'app-subapp-extension': {
-          fullpath: '/juju-ui/assets/javascripts/app-subapp-extension.js'
+          path: '/assets/javascripts/app-subapp-extension.js'
         },
 
         'app-cookies-extension': {
-          fullpath: '/juju-ui/assets/javascripts/app-cookies-extension.js'
+          path: '/assets/javascripts/app-cookies-extension.js'
         },
 
         'local-charm-import-helpers': {
-          fullpath: '/juju-ui/assets/javascripts/local-charm-import-helpers.js'
+          path: '/assets/javascripts/local-charm-import-helpers.js'
         },
 
         'bundle-importer': {
-          fullpath: '/juju-ui/utils/bundle-importer.js'
+          path: '/utils/bundle-importer.js'
         },
 
         'view-dropdown-extension': {
-          fullpath: '/juju-ui/assets/javascripts/view-dropdown-extension.js'
+          path: '/assets/javascripts/view-dropdown-extension.js'
         },
 
         'environment-header-extension': {
-          fullpath:
-              '/juju-ui/assets/javascripts/environment-header-extension.js'
+          path:
+              '/assets/javascripts/environment-header-extension.js'
         },
 
         'machine-view-panel-extension': {
-          fullpath:
-              '/juju-ui/assets/javascripts/machine-view-panel-extension.js'
+          path:
+              '/assets/javascripts/machine-view-panel-extension.js'
         },
 
         'more-menu': {
-          fullpath: '/juju-ui/widgets/more-menu.js'
+          path: '/widgets/more-menu.js'
         },
 
         'sub-app': {
-          fullpath: '/juju-ui/assets/javascripts/sub-app.js'
+          path: '/assets/javascripts/sub-app.js'
         },
 
         'zip-utils': {
-          fullpath: '/juju-ui/assets/javascripts/zip-utils.js'
+          path: '/assets/javascripts/zip-utils.js'
         },
 
         // Views
         'juju-landscape': {
-          fullpath: '/juju-ui/views/landscape.js'
+          path: '/views/landscape.js'
         },
 
         'juju-topology-relation': {
-          fullpath: '/juju-ui/views/topology/relation.js'
+          path: '/views/topology/relation.js'
         },
 
         'juju-topology-panzoom': {
-          fullpath: '/juju-ui/views/topology/panzoom.js'
+          path: '/views/topology/panzoom.js'
         },
 
         'juju-topology-viewport': {
-          fullpath: '/juju-ui/views/topology/viewport.js'
+          path: '/views/topology/viewport.js'
         },
 
         'juju-topology-service': {
-          fullpath: '/juju-ui/views/topology/service.js'
+          path: '/views/topology/service.js'
         },
 
         'juju-topology-utils': {
-          fullpath: '/juju-ui/views/topology/utils.js'
+          path: '/views/topology/utils.js'
         },
 
         'juju-topology': {
-          fullpath: '/juju-ui/views/topology/topology.js'
+          path: '/views/topology/topology.js'
         },
 
         'juju-view-bundle': {
-          fullpath: '/juju-ui/views/topology/bundle.js'
+          path: '/views/topology/bundle.js'
         },
         'juju-view-utils': {
-          fullpath: '/juju-ui/views/utils.js'
+          path: '/views/utils.js'
         },
 
         'juju-notifications': {
-          fullpath: '/juju-ui/views/notifications.js'
+          path: '/views/notifications.js'
         },
 
         'juju-help-dropdown': {
-          fullpath: '/juju-ui/views/help-dropdown.js'
+          path: '/views/help-dropdown.js'
         },
 
         'juju-user-dropdown': {
-          fullpath: '/juju-ui/views/user-dropdown.js'
+          path: '/views/user-dropdown.js'
         },
 
         'juju-container-token': {
-          fullpath: '/juju-ui/widgets/container-token.js'
+          path: '/widgets/container-token.js'
         },
 
         'juju-create-machine-view': {
-          fullpath: '/juju-ui/widgets/create-machine-view.js'
+          path: '/widgets/create-machine-view.js'
         },
 
         'juju-deployer-bar': {
-          fullpath: '/juju-ui/widgets/deployer-bar.js'
+          path: '/widgets/deployer-bar.js'
         },
 
         'juju-environment-header': {
-          fullpath: '/juju-ui/widgets/environment-header.js'
+          path: '/widgets/environment-header.js'
         },
 
         'juju-serviceunit-token': {
-          fullpath: '/juju-ui/widgets/serviceunit-token.js'
+          path: '/widgets/serviceunit-token.js'
         },
 
         'juju-machine-token': {
-          fullpath: '/juju-ui/widgets/machine-token.js'
+          path: '/widgets/machine-token.js'
         },
 
         'juju-machine-view-panel': {
-          fullpath: '/juju-ui/widgets/machine-view-panel.js'
+          path: '/widgets/machine-view-panel.js'
         },
 
         'juju-machine-view-panel-header': {
-          fullpath: '/juju-ui/widgets/machine-view-panel-header.js'
+          path: '/widgets/machine-view-panel-header.js'
         },
 
         'juju-view-environment': {
-          fullpath: '/juju-ui/views/environment.js'
+          path: '/views/environment.js'
         },
 
         'juju-view-login': {
-          fullpath: '/juju-ui/views/login.js'
+          path: '/views/login.js'
         },
 
         'juju-view-onboarding': {
-          fullpath: '/juju-ui/views/onboarding.js'
+          path: '/views/onboarding.js'
         },
 
         'juju-service-scale-up-view': {
-          fullpath: '/juju-ui/widgets/service-scale-up-view.js'
+          path: '/widgets/service-scale-up-view.js'
         },
 
         'juju-templates': {
-          fullpath: '/juju-ui/templates.js'
+          path: '/templates.js'
         },
 
         'juju-viewlet-manager': {
-          fullpath: '/juju-ui/views/viewlet-manager.js'
+          path: '/views/viewlet-manager.js'
         },
 
         'ghost-deployer-extension': {
-          fullpath: '/juju-ui/views/ghost-deployer-extension.js'
+          path: '/views/ghost-deployer-extension.js'
         },
 
         'added-services-button': {
-          fullpath: '/juju-ui/subapps/browser/views/added-services-button.js'
+          path: '/subapps/browser/views/added-services-button.js'
         },
 
         'juju-views': {
@@ -353,173 +354,173 @@ var GlobalConfig = {
         },
 
         'inspector-base': {
-          fullpath: '/juju-ui/views/inspector-base.js'
+          path: '/views/inspector-base.js'
         },
 
         'service-inspector-utils-extension': {
-          fullpath:
-              '/juju-ui/views/inspectors/service-inspector-utils-extension.js'
+          path:
+              '/views/inspectors/service-inspector-utils-extension.js'
         },
 
         'request-series-inspector': {
-          fullpath: '/juju-ui/views/inspectors/request-series.js'
+          path: '/views/inspectors/request-series.js'
         },
 
         'local-new-upgrade-inspector': {
-          fullpath: '/juju-ui/views/inspectors/local-new-upgrade.js'
+          path: '/views/inspectors/local-new-upgrade.js'
         },
 
         'service-inspector': {
-          fullpath: '/juju-ui/views/inspectors/service-inspector.js'
+          path: '/views/inspectors/service-inspector.js'
         },
 
         // Viewlet views
         'inspector-overview-view': {
-          fullpath: '/juju-ui/views/viewlets/service-overview.js'
+          path: '/views/viewlets/service-overview.js'
         },
 
         'viewlet-view-base': {
-          fullpath: '/juju-ui/views/viewlets/viewlet-view-base.js'
+          path: '/views/viewlets/viewlet-view-base.js'
         },
 
         'service-constraints-view': {
-          fullpath: '/juju-ui/views/viewlets/service-constraints.js'
+          path: '/views/viewlets/service-constraints.js'
         },
 
         'service-relations-view': {
-          fullpath: '/juju-ui/views/viewlets/service-relations.js'
+          path: '/views/viewlets/service-relations.js'
         },
 
         'request-series-view': {
-          fullpath: '/juju-ui/views/viewlets/request-series.js'
+          path: '/views/viewlets/request-series.js'
         },
 
         'service-config-view': {
-          fullpath: '/juju-ui/views/viewlets/service-config.js'
+          path: '/views/viewlets/service-config.js'
         },
 
         'local-new-upgrade-view': {
-          fullpath: '/juju-ui/views/viewlets/local-new-upgrade-view.js'
+          path: '/views/viewlets/local-new-upgrade-view.js'
         },
 
         'charm-details-view': {
-          fullpath: '/juju-ui/views/viewlets/charm-details.js'
+          path: '/views/viewlets/charm-details.js'
         },
 
         'inspector-header-view': {
-          fullpath: '/juju-ui/views/viewlets/inspector-header.js'
+          path: '/views/viewlets/inspector-header.js'
         },
 
         'unit-details-view': {
-          fullpath: '/juju-ui/views/viewlets/unit-details.js'
+          path: '/views/viewlets/unit-details.js'
         },
 
         'change-version-view': {
-          fullpath: '/juju-ui/views/viewlets/change-version.js'
+          path: '/views/viewlets/change-version.js'
         },
 
         'scale-up-view': {
-          fullpath: '/juju-ui/views/viewlets/scale-up.js'
+          path: '/views/viewlets/scale-up.js'
         },
 
         // Viewlet view extensions
 
         'conflict-view-extension': {
-          fullpath: '/juju-ui/views/viewlets/conflict-view-extension.js'
+          path: '/views/viewlets/conflict-view-extension.js'
         },
 
         'configfile-view-extension': {
-          fullpath: '/juju-ui/views/viewlets/configfile-view-extension.js'
+          path: '/views/viewlets/configfile-view-extension.js'
         },
 
         // Models
         'juju-endpoints': {
-          fullpath: '/juju-ui/models/endpoints.js'
+          path: '/models/endpoints.js'
         },
 
         'juju-bundle-models': {
-          fullpath: '/juju-ui/models/bundle.js'
+          path: '/models/bundle.js'
         },
 
         'juju-charm-models': {
-          fullpath: '/juju-ui/models/charm.js'
+          path: '/models/charm.js'
         },
 
         'juju-delta-handlers': {
-          fullpath: '/juju-ui/models/handlers.js'
+          path: '/models/handlers.js'
         },
 
         'juju-models': {
-          fullpath: '/juju-ui/models/models.js'
+          path: '/models/models.js'
         },
 
         'model-controller': {
-          fullpath: '/juju-ui/models/model-controller.js'
+          path: '/models/model-controller.js'
         },
 
         // Connectivity
         'juju-env-base': {
-          fullpath: '/juju-ui/store/env/base.js'
+          path: '/store/env/base.js'
         },
 
         'juju-env-go': {
-          fullpath: '/juju-ui/store/env/go.js'
+          path: '/store/env/go.js'
         },
 
         'juju-env-fakebackend': {
-          fullpath: '/juju-ui/store/env/fakebackend.js'
+          path: '/store/env/fakebackend.js'
         },
 
         'juju-fakebackend-simulator': {
-          fullpath: '/juju-ui/store/env/simulator.js'
+          path: '/store/env/simulator.js'
         },
 
         'juju-env-sandbox': {
-          fullpath: '/juju-ui/store/env/sandbox.js'
+          path: '/store/env/sandbox.js'
         },
 
         'juju-env-web-handler': {
-          fullpath: '/juju-ui/store/env/web-handler.js'
+          path: '/store/env/web-handler.js'
         },
 
         'juju-env-web-sandbox': {
-          fullpath: '/juju-ui/store/env/web-sandbox.js'
+          path: '/store/env/web-sandbox.js'
         },
 
         'juju-notification-controller': {
-          fullpath: '/juju-ui/store/notifications.js'
+          path: '/store/notifications.js'
         },
 
         'juju-endpoints-controller': {
-          fullpath: '/juju-ui/store/endpoints.js'
+          path: '/store/endpoints.js'
         },
 
         'charmstore-api': {
-          fullpath: '/juju-ui/store/charmstore-api.js'
+          path: '/store/charmstore-api.js'
         },
 
         'juju-websocket-logging': {
-          fullpath: '/juju-ui/websocket-logging.js'
+          path: '/websocket-logging.js'
         },
 
         'browser-cache': {
-          fullpath: '/juju-ui/utils/cache.js'
+          path: '/utils/cache.js'
         },
 
         'environment-change-set': {
-          fullpath: '/juju-ui/utils/environment-change-set.js'
+          path: '/utils/environment-change-set.js'
         },
 
         'mv-drop-target-view-extension': {
-          fullpath: '/juju-ui/utils/mv-drop-target-view-extension.js'
+          path: '/utils/mv-drop-target-view-extension.js'
         },
 
         'search-widget-mgmt-extension': {
-          fullpath: '/juju-ui/utils/search-widget-mgmt-extension.js'
+          path: '/utils/search-widget-mgmt-extension.js'
         },
 
         'autodeploy-extension': {
-          fullpath: '/juju-ui/widgets/autodeploy-extension.js'
+          path: '/widgets/autodeploy-extension.js'
         },
 
         'juju-controllers': {
@@ -531,65 +532,65 @@ var GlobalConfig = {
 
         // App
         'juju-gui': {
-          fullpath: '/juju-ui/app.js'
+          path: '/app.js'
         },
 
         // Sub Apps
 
         // Browser
         'subapp-browser': {
-          fullpath: '/juju-ui/subapps/browser/browser.js',
+          path: '/subapps/browser/browser.js',
           requires: ['subapp-browser-charmview']
         },
 
         'subapp-browser-events': {
-          fullpath: '/juju-ui/subapps/browser/events-extension.js'
+          path: '/subapps/browser/events-extension.js'
         },
 
         'juju-app-state': {
-          fullpath: '/juju-ui/views/state.js',
+          path: '/views/state.js',
           requires: []
         },
 
         // Browser Views
         'subapp-browser-entitybaseview': {
-          fullpath: '/juju-ui/subapps/browser/views/entity-base.js'
+          path: '/subapps/browser/views/entity-base.js'
         },
 
         'subapp-browser-charmview': {
-          fullpath: '/juju-ui/subapps/browser/views/charm.js'
+          path: '/subapps/browser/views/charm.js'
         },
 
         'subapp-browser-bundleview': {
-          fullpath: '/juju-ui/subapps/browser/views/bundle.js'
+          path: '/subapps/browser/views/bundle.js'
         },
 
         'subapp-browser-sidebar': {
-          fullpath: '/juju-ui/subapps/browser/views/sidebar.js',
+          path: '/subapps/browser/views/sidebar.js',
           requires: [
             'subapp-browser-charmview'
           ]
         },
 
         'juju-charmbrowser': {
-          fullpath: '/juju-ui/subapps/browser/views/charmbrowser.js'
+          path: '/subapps/browser/views/charmbrowser.js'
         },
 
         'juju-added-services': {
-          fullpath: '/juju-ui/subapps/browser/views/added-services.js'
+          path: '/subapps/browser/views/added-services.js'
         },
 
         'juju-added-service-token': {
-          fullpath: '/juju-ui/subapps/browser/views/added-service-token.js'
+          path: '/subapps/browser/views/added-service-token.js'
         },
 
         'juju-environment-counts': {
-          fullpath: '/juju-ui/subapps/browser/views/environment-counts.js'
+          path: '/subapps/browser/views/environment-counts.js'
         },
 
         //Browser Models
         'juju-browser-models': {
-          fullpath: '/juju-ui/models/browser.js'
+          path: '/models/browser.js'
         }
       }
     }

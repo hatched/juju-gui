@@ -13,7 +13,7 @@ var config = {
     'scss_dirs': [
       __dirname + '/app/assets/css/'
     ],
-    'public_dir': __dirname + '/app'
+    'public_dir': __dirname + '/build/gui'
   }
 };
 

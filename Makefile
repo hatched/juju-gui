@@ -48,16 +48,20 @@ all: sysdeps deps $(GUIBUILDDIR) $(BUILT_RAWJSFILES) templates
 
 .PHONY: help
 help:
+	@echo ""
 	@echo "Available targets:"
-	@echo "[no target] or all: Install all dependencies and build environment"
-	@echo "check: Run the linters on the code"
-	@echo "clean: Remove compiled code"
-	@echo "clean-all: Remove dependencies and compiled code"
-	@echo "css: Generate the css follup file
-	@echo "deps: Install application dependencies"
-	@echo "dist: Create release distribution"
-	@echo "sys-deps: Install system dependencies"
-	@echo "templates: Generate the template rollup file""
+	@echo ""
+	@echo "  [no target]   Install all dependencies and build environment"
+	@echo "  all           Install all dependencies and build environment"
+	@echo "  check         Run the linters on the code"
+	@echo "  clean         Remove compiled code"
+	@echo "  clean-all     Remove dependencies and compiled code"
+	@echo "  css           Generate the css follup file"
+	@echo "  deps          Install application dependencies"
+	@echo "  dist          Create release distribution"
+	@echo "  sys-deps      Install system dependencies"
+	@echo "  templates     Generate the template rollup file"
+	@echo ""
 
 .PHONY: sysdeps
 sysdeps:

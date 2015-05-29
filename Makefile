@@ -44,7 +44,7 @@ $(CSS_FILE): $(LESS_FILES) $(GUIBUILDDIR)
 	@bin/generateTemplates
 
 .PHONY: all
-all: sysdeps deps $(GUIBUILDDIR) $(BUILT_RAWJSFILES) templates
+all: $(GUIBUILDDIR) $(BUILT_RAWJSFILES) templates
 
 .PHONY: help
 help:
@@ -57,19 +57,18 @@ help:
 	@echo "  clean         Remove compiled code"
 	@echo "  clean-all     Remove dependencies and compiled code"
 	@echo "  css           Generate the css follup file"
-	@echo "  deps          Install application dependencies"
 	@echo "  dist          Create release distribution"
 	@echo "  sys-deps      Install system dependencies"
 	@echo "  templates     Generate the template rollup file"
 	@echo ""
 
-.PHONY: sysdeps
-sysdeps:
+.PHONY: sys-deps
+sys-deps:
 	@echo "Installing system dependencies."
-
-.PHONY: deps
-deps:
-	@echo "Installing application dependencies."
+	sudo apt-get install -y software-properties-common
+	sh install-sysdeps.sh
+	npm install --cache-min=999999999
+	$(call colorecho,"Done.")
 
 .PHONY: templates
 templates: $(TEMPLATES_FILE)

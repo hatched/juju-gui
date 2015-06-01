@@ -39,7 +39,7 @@ $(GUI_ASSET_DIR): $(GUIBUILDDIR)
 $(GUIBUILDDIR)%.js: %.js
 	@echo -n "Creating $^. "
 	@mkdir -p $(@D)
-	@babel $^ -o $@
+	@babel --source-maps $^ -o $@
 	$(call colorecho,"Done.")
 
 # The same library generates the template and css files so the generateTemplates
@@ -88,7 +88,7 @@ templates: $(TEMPLATES_FILE)
 # Required because it takes a long time to spin up for every individual file
 babelize: $(GUIBUILDDIR)
 	@echo -n "Running js source files through babeljs. "
-	@babel app --ignore="app/assets/javascripts/" --out-dir=$(GUIBUILDDIR)
+	@babel app --source-maps --ignore="app/assets/javascripts/" --out-dir=$(GUIBUILDDIR)
 	$(call colorecho,"Done.")
 
 .PHONY: assets

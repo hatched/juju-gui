@@ -3,7 +3,11 @@ SHELL = /bin/sh
 
 BUILDDIR := build/
 GUIBUILDDIR := $(BUILDDIR)gui/
+GUI_ASSET_DIR := $(GUIBUILDDIR)assets/javascripts/
+# The RAWJSFILES file list ignores files in the assets/javascripts directory and
+# instead are copied over without processing manually.
 RAWJSFILES := $(shell find app -type f -name '*.js' ! -path "app/assets/javascripts/*")
+JS_ASSETS := $(shell find app/assets/javascripts -type f -name '*.js')
 BUILT_RAWJSFILES := $(patsubst %, $(GUIBUILDDIR)%, $(RAWJSFILES))
 # -regextype is not supported on OSX, it needs to use -E instead.
 TEMPLATE_FILES := $(shell find app -type f -regextype posix-extended -regex '.+\.(handlebars|partial)')
@@ -27,6 +31,11 @@ $(GUIBUILDDIR): $(BUILDDIR)
 	@mkdir -p $(GUIBUILDDIR)
 	$(call colorecho,"Done.")
 
+$(GUI_ASSET_DIR): $(GUIBUILDDIR)
+	@echo -n "Generating GUI asset directory. "
+	@mkdir -p $(GUI_ASSET_DIR)
+	$(call colorecho,"Done.")
+
 $(GUIBUILDDIR)%.js: %.js
 	@echo -n "Creating $^. "
 	@mkdir -p $(@D)
@@ -44,7 +53,7 @@ $(CSS_FILE): $(LESS_FILES) $(GUIBUILDDIR)
 	@bin/generateTemplates
 
 .PHONY: all
-all: $(GUIBUILDDIR) babelize templates
+all: $(GUIBUILDDIR) babelize templates assets
 
 .PHONY: help
 help:
@@ -53,6 +62,7 @@ help:
 	@echo ""
 	@echo "  [no target]   Install all dependencies and build environment"
 	@echo "  all           Install all dependencies and build environment"
+	@echo "  assets        Copy the assets into the build directory"
 	@echo "  check         Run the linters on the code"
 	@echo "  clean         Remove compiled code"
 	@echo "  clean-all     Remove dependencies and compiled code"
@@ -77,7 +87,15 @@ templates: $(TEMPLATES_FILE)
 .PHONY: babelize
 # Required because it takes a long time to spin up for every individual file
 babelize: $(GUIBUILDDIR)
-	babel app --ignore="app/assets/javascripts/" --out-dir=$(GUIBUILDDIR)
+	@echo -n "Running js source files through babeljs. "
+	@babel app --ignore="app/assets/javascripts/" --out-dir=$(GUIBUILDDIR)
+	$(call colorecho,"Done.")
+
+.PHONY: assets
+assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
+	@echo -n "Copying JS assets to build directory. "
+	@cp $(JS_ASSETS) $(GUI_ASSET_DIR)
+	$(call colorecho,"Done.")
 
 .PHONY: css
 css: $(CSS_FILE)

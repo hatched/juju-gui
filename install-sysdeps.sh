@@ -8,4 +8,4 @@ sudo apt-get install -y nodejs imagemagick python-sphinx python-yaml \
   python-gflags g++ xvfb git firefox
 
 sudo npm install -g jshint@2.1.3 mocha-phantomjs@3.3.1 phantomjs@1.9.2-6 \
-  react-tools
+  babel@5.4.7

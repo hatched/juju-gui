@@ -61,29 +61,30 @@ var GlobalConfig = {
       }
     },
     d3: {
+      base: '/juju-ui',
       modules: {
         'd3': {
-          'fullpath': '/juju-ui/assets/javascripts/d3.min.js'
+          'fullpath': '/assets/javascripts/d3.min.js'
         },
         'd3-components': {
-          fullpath: '/juju-ui/assets/javascripts/d3-components.js'
+          fullpath: '/extensions/javascripts/d3-components.js'
         },
         'd3-statusbar': {
-          fullpath: '/juju-ui/assets/javascripts/d3.status.js'
+          fullpath: '/extensions/javascripts/d3.status.js'
         }
       }
     },
     'event_tracker': {
       modules: {
         'event-tracker': {
-          fullpath: '/juju-ui/assets/javascripts/event-tracker.js'
+          fullpath: '/juju-ui/extensions/javascripts/event-tracker.js'
         }
       }
     },
     'resizing_textarea': {
       modules: {
         'resizing-textarea': {
-          fullpath: '/juju-ui/assets/javascripts/resizing_textarea.js'
+          fullpath: '/juju-ui/utils/resizing_textarea.js'
         }
       }
     },
@@ -129,7 +130,7 @@ var GlobalConfig = {
       modules: {
         // Primitives
         'yui-patches': {
-          path: '/assets/javascripts/yui-patches.js'
+          path: '/extensions/yui-patches.js'
         },
 
         'notifier': {
@@ -171,19 +172,19 @@ var GlobalConfig = {
         },
 
         'ns-routing-app-extension': {
-          path: '/assets/javascripts/ns-routing-app-extension.js'
-        },
-
-        'app-subapp-extension': {
-          path: '/assets/javascripts/app-subapp-extension.js'
-        },
-
-        'app-cookies-extension': {
-          path: '/assets/javascripts/app-cookies-extension.js'
+          path: '/extensions/ns-routing-app-extension.js'
         },
 
         'local-charm-import-helpers': {
-          path: '/assets/javascripts/local-charm-import-helpers.js'
+          path: '/extensions/local-charm-import-helpers.js'
+        },
+
+        'app-subapp-extension': {
+          path: '/extensions/app-subapp-extension.js'
+        },
+
+        'app-cookies-extension': {
+          path: '/extensions/app-cookies-extension.js'
         },
 
         'bundle-importer': {
@@ -191,17 +192,16 @@ var GlobalConfig = {
         },
 
         'view-dropdown-extension': {
-          path: '/assets/javascripts/view-dropdown-extension.js'
+          path: '/extensions/view-dropdown-extension.js'
         },
 
         'environment-header-extension': {
-          path:
-              '/assets/javascripts/environment-header-extension.js'
+          path: '/extensions/environment-header-extension.js'
         },
 
         'machine-view-panel-extension': {
           path:
-              '/assets/javascripts/machine-view-panel-extension.js'
+              '/extensions/machine-view-panel-extension.js'
         },
 
         'more-menu': {
@@ -209,11 +209,11 @@ var GlobalConfig = {
         },
 
         'sub-app': {
-          path: '/assets/javascripts/sub-app.js'
+          path: '/extensions/sub-app.js'
         },
 
         'zip-utils': {
-          path: '/assets/javascripts/zip-utils.js'
+          path: '/utils/zip-utils.js'
         },
 
         // Views

@@ -3,7 +3,7 @@ SHELL = /bin/sh
 
 BUILDDIR := build/
 GUIBUILDDIR := $(BUILDDIR)gui/
-RAWJSFILES := $(shell find app -name '*.js')
+RAWJSFILES := $(shell find app -type f -name '*.js' ! -path "app/assets/javascripts/*")
 BUILT_RAWJSFILES := $(patsubst %, $(GUIBUILDDIR)%, $(RAWJSFILES))
 # -regextype is not supported on OSX, it needs to use -E instead.
 TEMPLATE_FILES := $(shell find app -type f -regextype posix-extended -regex '.+\.(handlebars|partial)')
@@ -30,7 +30,7 @@ $(GUIBUILDDIR): $(BUILDDIR)
 $(GUIBUILDDIR)%.js: %.js
 	@echo -n "Creating $^. "
 	@mkdir -p $(@D)
-	@cp $^ $(@D)
+	@babel $^ -o $@
 	$(call colorecho,"Done.")
 
 # The same library generates the template and css files so the generateTemplates
@@ -44,7 +44,7 @@ $(CSS_FILE): $(LESS_FILES) $(GUIBUILDDIR)
 	@bin/generateTemplates
 
 .PHONY: all
-all: $(GUIBUILDDIR) $(BUILT_RAWJSFILES) templates
+all: $(GUIBUILDDIR) babelize templates
 
 .PHONY: help
 help:
@@ -56,7 +56,7 @@ help:
 	@echo "  check         Run the linters on the code"
 	@echo "  clean         Remove compiled code"
 	@echo "  clean-all     Remove dependencies and compiled code"
-	@echo "  css           Generate the css follup file"
+	@echo "  css           Generate the css rollup file"
 	@echo "  dist          Create release distribution"
 	@echo "  sys-deps      Install system dependencies"
 	@echo "  templates     Generate the template rollup file"
@@ -73,6 +73,11 @@ sys-deps:
 .PHONY: templates
 templates: $(TEMPLATES_FILE)
 	$(call colorecho,"Done.")
+
+.PHONY: babelize
+# Required because it takes a long time to spin up for every individual file
+babelize: $(GUIBUILDDIR)
+	babel app --ignore="app/assets/javascripts/" --out-dir=$(GUIBUILDDIR)
 
 .PHONY: css
 css: $(CSS_FILE)

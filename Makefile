@@ -3,15 +3,15 @@ SHELL = /bin/sh
 
 BUILDDIR := build/
 GUIBUILDDIR := $(BUILDDIR)gui/
-GUI_ASSET_DIR := $(GUIBUILDDIR)assets/javascripts/
+GUI_ASSET_DIR := $(GUIBUILDDIR)assets/
 # The RAWJSFILES file list ignores files in the assets/javascripts directory and
 # instead are copied over without processing manually.
 RAWJSFILES := $(shell find app -type f -name '*.js' ! -path "app/assets/javascripts/*")
-JS_ASSETS := $(shell find app/assets/javascripts -type f -name '*.js')
+JS_ASSETS := $(shell find app/assets/javascripts -not -path "app/assets/javascripts")
+IMAGE_ASSETS := $(shell find app/assets/images -not -path "app/assets/images")
 BUILT_RAWJSFILES := $(patsubst app/%, $(GUIBUILDDIR)%, $(RAWJSFILES))
 MIN_JS_FILES := $(patsubst %.js, %-min.js, $(BUILT_RAWJSFILES))
-# -regextype is not supported on OSX, it needs to use -E instead.
-TEMPLATE_FILES := $(shell find app -type f -regextype posix-extended -regex '.+\.(handlebars|partial)')
+TEMPLATE_FILES := $(shell find app -type f -name "*.handlebars" -or -name "*.partial")
 TEMPLATES_FILE := build/templates.js
 LESS_FILES := $(shell find lib/views -type f -name '*.less')
 CSS_FILE := build/gui/juju-gui.css
@@ -33,8 +33,9 @@ $(GUIBUILDDIR): $(BUILDDIR)
 	$(call colorecho,"Done.")
 
 $(GUI_ASSET_DIR): $(GUIBUILDDIR)
-	@echo -n "Generating GUI asset directory. "
-	@mkdir -p $(GUI_ASSET_DIR)
+	@echo -n "Generating GUI asset directories. "
+	@mkdir -p $(GUI_ASSET_DIR)javascripts
+	@mkdir -p $(GUI_ASSET_DIR)images
 	$(call colorecho,"Done.")
 
 $(GUIBUILDDIR)%.js: app/%.js
@@ -104,7 +105,10 @@ uglify: $(MIN_JS_FILES)
 .PHONY: assets
 assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
 	@echo -n "Copying JS assets to build directory. "
-	@cp $(JS_ASSETS) $(GUI_ASSET_DIR)
+	@cp -P $(JS_ASSETS) $(GUI_ASSET_DIR)javascripts
+	$(call colorecho,"Done.")
+	@echo -n "Copying Image assets to build directory. "
+	@rsync -a $(IMAGE_ASSETS) $(GUI_ASSET_DIR)images
 	$(call colorecho,"Done.")
 
 .PHONY: css

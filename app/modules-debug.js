@@ -61,23 +61,22 @@ var GlobalConfig = {
       }
     },
     d3: {
-      base: '/juju-ui',
       modules: {
         'd3': {
-          'fullpath': '/assets/javascripts/d3.min.js'
+          'fullpath': '/juju-ui/assets/javascripts/d3.min.js'
         },
         'd3-components': {
-          fullpath: '/extensions/javascripts/d3-components.js'
+          fullpath: '/juju-ui/extensions/d3-components.js'
         },
         'd3-statusbar': {
-          fullpath: '/extensions/javascripts/d3.status.js'
+          fullpath: '/juju-ui/extensions/d3.status.js'
         }
       }
     },
     'event_tracker': {
       modules: {
         'event-tracker': {
-          fullpath: '/juju-ui/extensions/javascripts/event-tracker.js'
+          fullpath: '/juju-ui/extensions/event-tracker.js'
         }
       }
     },

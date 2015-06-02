@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
         },
         files: {
-          'build-shared/juju-ui/assets': 'app/assets/images/*'
+          'build/gui': 'app/assets/images/*'
         }
       }
     }

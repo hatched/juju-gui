@@ -16,6 +16,7 @@ TEMPLATES_FILE := build/templates.js
 LESS_FILES := $(shell find lib/views -type f -name '*.less')
 JUJUGUI_CSS_FILE := build/gui/juju-gui.css
 STATIC_CSS_FILE := build/gui/all-static.css
+SPRITE_FILES := build/gui/sprites.css build/gui/sprites.png
 
 define colorecho
 	@tput setaf 2
@@ -46,9 +47,10 @@ $(GUIBUILDDIR)%.js: app/%.js
 	$(call colorecho,"Done.")
 
 $(GUIBUILDDIR)%-min.js: $(GUIBUILDDIR)%.js
+	@echo "Running js files through uglifyjs."
 	@echo -n "Creating $@. "
 	@uglifyjs --screw-ie8 $^ -o $@ --source-map $@.map --in-source-map $^.map
-	$(call colorecho,"Done.")
+	$(call colorecho,"Done minifying javascript.")
 
 # The same library generates the template and css files so the generateTemplates
 # bin will be run twice so that there is a clear upgrade path.
@@ -68,8 +70,13 @@ $(STATIC_CSS_FILE): $(GUIBUILDDIR)
 	@bin/merge-files
 	$(call colorecho,"Done.")
 
+$(SPRITE_FILES): node_modules/grunt node_modules/node-spritesheet $(IMAGE_ASSETS)
+	@echo "Generating sprites."
+	@node_modules/grunt/bin/grunt spritegen
+	$(call colorecho,"Done.")
+
 .PHONY: all
-all: $(GUIBUILDDIR) babelize uglify templates assets css
+all: $(GUIBUILDDIR) babelize uglify templates assets css sprites
 
 .PHONY: help
 help:
@@ -103,9 +110,9 @@ templates: $(TEMPLATES_FILE)
 .PHONY: babelize
 # Required because it takes a long time to spin up for every individual file
 babelize: $(GUIBUILDDIR)
-	@echo -n "Running js source files through babeljs. "
+	@echo "Running js source files through babeljs. "
 	@babel app --source-maps --ignore="app/assets/javascripts/" --out-dir=$(GUIBUILDDIR)
-	$(call colorecho,"Done.")
+	$(call colorecho,"Done babeljs processing.")
 
 .PHONY: uglify
 uglify: $(MIN_JS_FILES)
@@ -123,6 +130,10 @@ assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
 .PHONY: css
 css: $(JUJUGUI_CSS_FILE) $(STATIC_CSS_FILE)
 	$(call colorecho,"Done generating CSS.")
+
+.PHONY: sprites
+sprites: $(SPRITE_FILES)
+	$(call colorecho."Done generating sprites.")
 
 .PHONY: devel
 devel: $(BUILT_RAWJSFILES) $(MIN_JS_FILES)

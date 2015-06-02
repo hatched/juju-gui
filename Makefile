@@ -14,7 +14,8 @@ MIN_JS_FILES := $(patsubst %.js, %-min.js, $(BUILT_RAWJSFILES))
 TEMPLATE_FILES := $(shell find app -type f -name "*.handlebars" -or -name "*.partial")
 TEMPLATES_FILE := build/templates.js
 LESS_FILES := $(shell find lib/views -type f -name '*.less')
-CSS_FILE := build/gui/juju-gui.css
+JUJUGUI_CSS_FILE := build/gui/juju-gui.css
+STATIC_CSS_FILE := build/gui/all-static.css
 
 define colorecho
 	@tput setaf 2
@@ -55,12 +56,20 @@ $(TEMPLATES_FILE): $(TEMPLATE_FILES) $(GUIBUILDDIR)
 	@echo "Generating templates. "
 	@bin/generateTemplates
 
-$(CSS_FILE): $(LESS_FILES) $(GUIBUILDDIR)
-	@echo "Generating css. "
+$(JUJUGUI_CSS_FILE): $(LESS_FILES) $(GUIBUILDDIR)
+	@echo -n "Generating Juju GUI css. "
 	@bin/generateTemplates
+	$(call colorecho,"Done.")
+
+# The merge-files script combines the js and css but we only care about the css
+# now. This will need to be split out.
+$(STATIC_CSS_FILE): $(GUIBUILDDIR)
+	@echo -n "Generating static css. "
+	@bin/merge-files
+	$(call colorecho,"Done.")
 
 .PHONY: all
-all: $(GUIBUILDDIR) babelize uglify templates assets
+all: $(GUIBUILDDIR) babelize uglify templates assets css
 
 .PHONY: help
 help:
@@ -100,7 +109,7 @@ babelize: $(GUIBUILDDIR)
 
 .PHONY: uglify
 uglify: $(MIN_JS_FILES)
-	$(call colorecho,"Done minifying javascript")
+	$(call colorecho,"Done minifying javascript.")
 
 .PHONY: assets
 assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
@@ -112,8 +121,8 @@ assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
 	$(call colorecho,"Done.")
 
 .PHONY: css
-css: $(CSS_FILE)
-	$(call colorecho,"Done.")
+css: $(JUJUGUI_CSS_FILE) $(STATIC_CSS_FILE)
+	$(call colorecho,"Done generating CSS.")
 
 .PHONY: devel
 devel: $(BUILT_RAWJSFILES) $(MIN_JS_FILES)

@@ -9,6 +9,7 @@ GUI_ASSET_DIR := $(GUIBUILDDIR)assets/
 RAWJSFILES := $(shell find app -type f -name '*.js' ! -path "app/assets/javascripts/*")
 JS_ASSETS := $(shell find app/assets/javascripts -not -path "app/assets/javascripts")
 IMAGE_ASSETS := $(shell find app/assets/images -not -path "app/assets/images")
+SVG_ASSETS := $(shell find app/assets/svgs -not -path "app/assets/svgs")
 BUILT_RAWJSFILES := $(patsubst app/%, $(GUIBUILDDIR)%, $(RAWJSFILES))
 MIN_JS_FILES := $(patsubst %.js, %-min.js, $(BUILT_RAWJSFILES))
 TEMPLATE_FILES := $(shell find app -type f -name "*.handlebars" -or -name "*.partial")
@@ -38,6 +39,7 @@ $(GUI_ASSET_DIR): $(GUIBUILDDIR)
 	@echo -n "Generating GUI asset directories. "
 	@mkdir -p $(GUI_ASSET_DIR)javascripts
 	@mkdir -p $(GUI_ASSET_DIR)images
+	@mkdir -p $(GUI_ASSET_DIR)svgs
 	$(call colorecho,"Done.")
 
 $(GUIBUILDDIR)%.js: app/%.js
@@ -47,10 +49,9 @@ $(GUIBUILDDIR)%.js: app/%.js
 	$(call colorecho,"Done.")
 
 $(GUIBUILDDIR)%-min.js: $(GUIBUILDDIR)%.js
-	@echo "Running js files through uglifyjs."
 	@echo -n "Creating $@. "
 	@uglifyjs --screw-ie8 $^ -o $@ --source-map $@.map --in-source-map $^.map
-	$(call colorecho,"Done minifying javascript.")
+	$(call colorecho,"Done.")
 
 # The same library generates the template and css files so the generateTemplates
 # bin will be run twice so that there is a clear upgrade path.
@@ -125,6 +126,9 @@ assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
 	$(call colorecho,"Done.")
 	@echo -n "Copying Image assets to build directory. "
 	@rsync -a $(IMAGE_ASSETS) $(GUI_ASSET_DIR)images
+	$(call colorecho,"Done.")
+	@echo -n "Copying SVG assets to build directory. "
+	@cp $(SVG_ASSETS) $(GUI_ASSET_DIR)svgs
 	$(call colorecho,"Done.")
 
 .PHONY: css

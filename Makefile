@@ -8,7 +8,8 @@ GUI_ASSET_DIR := $(GUIBUILDDIR)assets/javascripts/
 # instead are copied over without processing manually.
 RAWJSFILES := $(shell find app -type f -name '*.js' ! -path "app/assets/javascripts/*")
 JS_ASSETS := $(shell find app/assets/javascripts -type f -name '*.js')
-BUILT_RAWJSFILES := $(patsubst %, $(GUIBUILDDIR)%, $(RAWJSFILES))
+BUILT_RAWJSFILES := $(patsubst app/%, $(GUIBUILDDIR)%, $(RAWJSFILES))
+MIN_JS_FILES := $(patsubst %.js, %-min.js, $(BUILT_RAWJSFILES))
 # -regextype is not supported on OSX, it needs to use -E instead.
 TEMPLATE_FILES := $(shell find app -type f -regextype posix-extended -regex '.+\.(handlebars|partial)')
 TEMPLATES_FILE := build/templates.js
@@ -36,10 +37,15 @@ $(GUI_ASSET_DIR): $(GUIBUILDDIR)
 	@mkdir -p $(GUI_ASSET_DIR)
 	$(call colorecho,"Done.")
 
-$(GUIBUILDDIR)%.js: %.js
+$(GUIBUILDDIR)%.js: app/%.js
 	@echo -n "Creating $^. "
 	@mkdir -p $(@D)
-	@babel --source-maps $^ -o $@
+	@babel $^ -o $@ --source-maps
+	$(call colorecho,"Done.")
+
+$(GUIBUILDDIR)%-min.js: $(GUIBUILDDIR)%.js
+	@echo -n "Creating $@. "
+	@uglifyjs --screw-ie8 $^ -o $@ --source-map $@.map --in-source-map $^.map
 	$(call colorecho,"Done.")
 
 # The same library generates the template and css files so the generateTemplates
@@ -53,7 +59,7 @@ $(CSS_FILE): $(LESS_FILES) $(GUIBUILDDIR)
 	@bin/generateTemplates
 
 .PHONY: all
-all: $(GUIBUILDDIR) babelize templates assets
+all: $(GUIBUILDDIR) babelize uglify templates assets
 
 .PHONY: help
 help:
@@ -91,6 +97,10 @@ babelize: $(GUIBUILDDIR)
 	@babel app --source-maps --ignore="app/assets/javascripts/" --out-dir=$(GUIBUILDDIR)
 	$(call colorecho,"Done.")
 
+.PHONY: uglify
+uglify: $(MIN_JS_FILES)
+	$(call colorecho,"Done minifying javascript")
+
 .PHONY: assets
 assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
 	@echo -n "Copying JS assets to build directory. "
@@ -102,7 +112,7 @@ css: $(CSS_FILE)
 	$(call colorecho,"Done.")
 
 .PHONY: devel
-devel: $(BUILT_RAWJSFILES)
+devel: $(BUILT_RAWJSFILES) $(MIN_JS_FILES)
 	node server.js
 
 .PHONY: check

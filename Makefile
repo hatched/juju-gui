@@ -10,6 +10,7 @@ RAWJSFILES := $(shell find app -type f -name '*.js' ! -path "app/assets/javascri
 JS_ASSETS := $(shell find app/assets/javascripts -not -path "app/assets/javascripts")
 IMAGE_ASSETS := $(shell find app/assets/images -not -path "app/assets/images")
 SVG_ASSETS := $(shell find app/assets/svgs -not -path "app/assets/svgs")
+FONT_ASSETS := $(shell find app/assets/fonts -not -path "app/assets/fonts")
 BUILT_RAWJSFILES := $(patsubst app/%, $(GUIBUILDDIR)%, $(RAWJSFILES))
 MIN_JS_FILES := $(patsubst %.js, %-min.js, $(BUILT_RAWJSFILES))
 TEMPLATE_FILES := $(shell find app -type f -name "*.handlebars" -or -name "*.partial")
@@ -40,6 +41,7 @@ $(GUI_ASSET_DIR): $(GUIBUILDDIR)
 	@mkdir -p $(GUI_ASSET_DIR)javascripts
 	@mkdir -p $(GUI_ASSET_DIR)images
 	@mkdir -p $(GUI_ASSET_DIR)svgs
+	@mkdir -p $(GUI_ASSET_DIR)fonts
 	$(call colorecho,"Done.")
 
 $(GUIBUILDDIR)%.js: app/%.js
@@ -129,6 +131,9 @@ assets: $(GUI_ASSET_DIR) $(JS_ASSETS)
 	$(call colorecho,"Done.")
 	@echo -n "Copying SVG assets to build directory. "
 	@cp $(SVG_ASSETS) $(GUI_ASSET_DIR)svgs
+	$(call colorecho,"Done.")
+	@echo -n "Copying Font assets to build directory. "
+	@cp $(FONT_ASSETS) $(GUI_ASSET_DIR)fonts
 	$(call colorecho,"Done.")
 
 .PHONY: css

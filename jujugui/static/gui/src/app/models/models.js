@@ -2709,7 +2709,7 @@ YUI.add('juju-models', function(Y) {
           dbUnit.set(flag, value);
         });
         if (service.get('subordinate')) {
-          service.updateSubordinateUnits(this)
+          service.updateSubordinateUnits(this);
         }
       }
       if (serviceOrServiceList instanceof models.ServiceList) {

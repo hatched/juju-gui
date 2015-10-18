@@ -18,7 +18,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use strict';
 
-describe.only('test_model.js', function() {
+describe('test_model.js', function() {
   describe('Charm initialization', function() {
     var models;
 

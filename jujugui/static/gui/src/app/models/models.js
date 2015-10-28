@@ -311,6 +311,14 @@ YUI.add('juju-models', function(Y) {
       });
     },
 
+    /**
+    Given a relation between two services (this one and one other), return the service on the other end of the relation.
+
+    @method getOtherServiceFromRelation
+    @param relation The relation to check
+    @param db The database of services and relations
+    @return The other service in the relation
+    */
     getOtherServiceFromRelation: function(relation, db) {
       var endpoints = relation.get('endpoints');
       if (!endpoints || endpoints.length !== 2) {
@@ -322,6 +330,14 @@ YUI.add('juju-models', function(Y) {
       return db.services.getById(endpoints[0][0]);
     },
 
+    /**
+    Update the unit list for subordinate services with the units that they are
+    installed on.
+
+    @method updateSubordinateUnits
+    @param db The database of services, relations, and units
+    @param halt If true, do not continue on to update related services
+    */
     updateSubordinateUnits: function(db, halt) {
       var relations = db.relations.get_relations_for_service(this);
       if (this.get('subordinate')) {

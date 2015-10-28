@@ -425,7 +425,9 @@ YUI.add('environment-change-set', function(Y) {
         // When working with ghost services we are passed a modelId which points
         // to the proper model. So we fetch that model.
         var model = modelList.getById(command.options.modelId);
-          if (model) {
+        // If the modelList was stubbed in tests, ensure that we have an actual
+        // model to work with.
+        if (model) {
           // Depending on the modellist this model may be an object from a
           // lazymodellist or a Y.Model from a regular model list.
           if (!(model instanceof Y.Model)) {

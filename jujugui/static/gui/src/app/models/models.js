@@ -312,7 +312,8 @@ YUI.add('juju-models', function(Y) {
     },
 
     /**
-    Given a relation between two services (this one and one other), return the service on the other end of the relation.
+    Given a relation between two services (this one and one other), return the
+    service on the other end of the relation.
 
     @method getOtherServiceFromRelation
     @param relation The relation to check

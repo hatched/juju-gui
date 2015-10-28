@@ -815,7 +815,7 @@ YUI.add('juju-models', function(Y) {
     */
     process_delta: function(action, data) {
       _process_delta(this, action, data, {exposed: false});
-    },
+    }
   });
 
   models.ServiceList = ServiceList;

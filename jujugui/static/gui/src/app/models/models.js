@@ -834,6 +834,18 @@ YUI.add('juju-models', function(Y) {
     // Define remote service attributes.
     ATTRS: {
       /**
+        Positional annotations for the remote service in this model.
+
+        @attribute annotations
+        @type {Object}
+      */
+      annotations: {
+        value: {
+          'gui-x': 0,
+          'gui-y': 0
+        }
+      },
+      /**
         The remote service URL, assigned to the service when it was originally
         offered. For instance "local:/u/admin/ec2/django".
         This info is included in the Juju mega-watcher for remote services.

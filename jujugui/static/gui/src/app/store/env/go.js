@@ -302,11 +302,11 @@ YUI.add('juju-env-go', function(Y) {
       var deltas = [],
           cmp = {
             serviceInfo: 1,
-            relationInfo: 2,
-            unitInfo: 3,
-            machineInfo: 4,
-            annotationInfo: 5,
-            remoteserviceInfo: 100
+            remoteserviceInfo: 2,
+            relationInfo: 3,
+            unitInfo: 4,
+            machineInfo: 5,
+            annotationInfo: 6
           };
       data.Response.Deltas.forEach(function(delta) {
         var kind = delta[0],

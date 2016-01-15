@@ -1151,7 +1151,7 @@ describe('File drag over notification system', function() {
       assert.isTrue(app.db.resetCalled, 'db was not reset.');
       assert.equal(app.db.fireSignal, 'update', 'db was not updated.');
       var topo = app.views.environment.instance.topo;
-      assert.isTrue(topop.modules.ServiceModule.centerOnLoad,
+      assert.isTrue(topo.modules.ServiceModule.centerOnLoad,
                     'canvas centering was not reset.');
     });
 

@@ -1839,6 +1839,9 @@ YUI.add('juju-gui', function(Y) {
       this.env.close();
       this.db.reset();
       this.db.fire('update');
+      // Reset canvas centering to new env will center on load.
+      var topo = this.views.environment.instance.topo;
+      topo.modules.ServiceModule.centerOnLoad = true;
     },
 
     /**

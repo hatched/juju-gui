@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "babel": "^5.8.29",
+    "browserify": "^13.0.0",
+    "browserify-incremental": "^3.0.1",
     "chai": "^3.4.1",
     "classnames": "^2.2.1",
     "clipboard": "^1.5.5",

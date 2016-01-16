@@ -28,6 +28,8 @@ D3_DEPS := $(GUIBUILD)/node_modules/d3
 BUILT_D3 := $(BUILT_JS_ASSETS)/d3-min.js
 SELENIUM := lib/python2.7/site-packages/selenium-2.47.3-py2.7.egg/selenium/selenium.py
 REACT_ASSETS := $(BUILT_JS_ASSETS)/react-with-addons.js $(BUILT_JS_ASSETS)/react-with-addons.min.js
+JS_IMPORTS := $(GUIBUILD)/app/imports.js
+JS_BUNDLE := $(GUIBUILD)/app/bundle.js
 
 CACHE := $(shell pwd)/downloadcache
 PYTHON_CACHE := file:///$(CACHE)/python
@@ -153,6 +155,9 @@ $(BUILT_JS_ASSETS): $(NODE_MODULES)
 		sed s/\.js$$//g | \
 		xargs -I {} node_modules/.bin/uglifyjs --screw-ie8 {}.js -o {}-min.js
 
+$(JS_BUNDLE): $(JS_IMPORTS) $(RAWJSFILES)
+	$(NODE_MODULES)/.bin/browserifyinc $(JS_IMPORTS) -o $(JS_BUNDLE)
+
 $(YUI): $(NODE_MODULES)
 
 $(REACT_ASSETS): $(NODE_MODULES)
@@ -264,7 +269,7 @@ $(FAVICON):
 images: $(STATIC_IMAGES) $(SVG_SPRITE_FILE) $(FAVICON)
 
 .PHONY: gui
-gui: $(JUJUGUI) $(MODULESMIN) $(BUILT_JS_ASSETS) $(BUILT_YUI) $(CSS_FILE) $(STATIC_CSS_FILES) $(STATIC_IMAGES) $(SVG_SPRITE_FILE) $(FAVICON) $(REACT_ASSETS) $(HANDLEBARS_ASSETS) $(STATIC_FONT_FILES)
+gui: $(JUJUGUI) $(MODULESMIN) $(BUILT_JS_ASSETS) $(BUILT_YUI) $(CSS_FILE) $(STATIC_CSS_FILES) $(STATIC_IMAGES) $(SVG_SPRITE_FILE) $(FAVICON) $(REACT_ASSETS) $(HANDLEBARS_ASSETS) $(STATIC_FONT_FILES) $(JS_BUNDLE)
 
 .PHONY: watch
 watch:

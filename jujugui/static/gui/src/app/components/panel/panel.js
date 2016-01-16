@@ -16,68 +16,67 @@ You should have received a copy of the GNU Affero General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-'use strict';
+import React from 'react';
 
-YUI.add('panel-component', function() {
+export default class Panel extends React.Component {
 
-  juju.components.Panel = React.createClass({
+  constructor(props) {
+    super(props)
+    this._stopBubble = this._stopBubble.bind(this)
+    this._handleClick = this._handleClick.bind(this)
+  }
 
-    /**
-      Returns the supplied classes with the 'active' class applied if the
-      component is the one which is active.
+  /**
+    Returns the supplied classes with the 'active' class applied if the
+    component is the one which is active.
 
-      @method _generateClasses
-      @param {String} section The section you want to check if it needs to be
-        active.
-      @returns {String} The collection of class names.
-    */
-    _genClasses: function(section) {
-      return classNames(
-        'panel-component',
-        this.props.instanceName,
-        {
-          hidden: !this.props.visible
-        }
-      );
-    },
-
-    /**
-      Call a click action if it exists.
-
-      @method _handleClick
-    */
-    _handleClick: function() {
-      var clickAction = this.props.clickAction;
-      if (clickAction) {
-        clickAction();
+    @method _generateClasses
+    @param {String} section The section you want to check if it needs to be
+      active.
+    @returns {String} The collection of class names.
+  */
+  _genClasses(section) {
+    return classNames(
+      'panel-component',
+      this.props.instanceName,
+      {
+        hidden: !this.props.visible
       }
-    },
+    )
+  }
 
-    /**
-      Don't bubble the click event to the parent.
+  /**
+    Call a click action if it exists.
 
-      @method _stopBubble
-      @param {Object} The click event.
-    */
-    _stopBubble: function(e) {
-      if (this.props.clickAction) {
-        e.stopPropagation();
-      }
-    },
-
-    render: function() {
-      return (
-        <div className={this._genClasses()}
-          onClick={this._handleClick}>
-          <div onClick={this._stopBubble}>
-            {this.props.children}
-          </div>
-        </div>
-      );
+    @method _handleClick
+  */
+  _handleClick() {
+    var clickAction = this.props.clickAction
+    if (clickAction) {
+      clickAction()
     }
+  }
 
-  });
+  /**
+    Don't bubble the click event to the parent.
 
-}, '0.1.0', { requires: [
-  'added-services-list'
-]});
+    @method _stopBubble
+    @param {Object} The click event.
+  */
+  _stopBubble(e) {
+    if (this.props.clickAction) {
+      e.stopPropagation()
+    }
+  }
+
+  render() {
+    return (
+      <div className={this._genClasses()}
+        onClick={this._handleClick}>
+        <div onClick={this._stopBubble}>
+          {this.props.children}
+        </div>
+      </div>
+    )
+  }
+}

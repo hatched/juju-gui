@@ -89,6 +89,7 @@ class GUIApp {
       @type {Object}
     */
     this.db = new yui.juju.models.Database();
+    this.db.charms.on('*:load', this.fetchCharmIntegrations.bind(this));
     /**
       Timer for debouncing database change events.
       @type {Integer}
@@ -1601,6 +1602,51 @@ class GUIApp {
       const gisfLogoutUrl = config.gisfLogout || '';
       window.location.assign(window.location.origin + gisfLogoutUrl);
     }
+  }
+
+  _loadCharmGUIIntegration(charmId, filePath) {
+    const path = this.modelAPI.getLocalCharmFileUrl(charmId, filePath);
+    const script = document.createElement('script');
+    script.src = path;
+    script.onload = function (e) {
+      console.log('onloaded', e);
+      //do stuff with the script
+    };
+    // Cannot be done with Chrome because it blocks sub resources with u/p
+    document.head.appendChild(script);
+  }
+
+  fetchCharmIntegrations() {
+    const guiIntegration = 'gui-api.json';
+    // XXX handle the addition and removal of charms
+    this.db.charms.each(charm => {
+      const charmId = charm.get('id');
+      if (charmId.indexOf('local') > -1) {
+        // This is a local charm so we need to get the file list using a
+        // different approach than if it was a charm from the charmstore.
+        this.modelAPI.listLocalCharmFiles(charmId, () => {}, response => {
+          let exists;
+          try {
+            exists = JSON.parse(response.target.response).files.includes(guiIntegration);
+          } catch (e) {
+            console.error(e);
+          }
+          if (exists) {
+            this.modelAPI.getLocalCharmFileContents(
+              charmId, guiIntegration, ()=>{}, response => {
+                try {
+                  const data = JSON.parse(response.target.response);
+                  this._loadCharmGUIIntegration(charmId, data.ui.path);
+                } catch (e) {
+                  console.error(e);
+                }
+              });
+          }
+        });
+        return;
+      }
+      // If it is not a local charm:
+    });
   }
 
   /**

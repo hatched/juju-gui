@@ -110,6 +110,16 @@ class UnitDetails extends React.Component {
     );
   }
 
+  _generateCharmPlugin() {
+    const plugin = this.props.charmPlugin;
+    const charmId = this.props.unit.charmUrl;
+    if (!plugin || !plugin[charmId] || !plugin[charmId].unitData) {
+      return;
+    }
+    const UnitData = plugin[charmId].unitData;
+    return <UnitData/>;
+  }
+
   render() {
     const props = this.props;
     const unit = props.unit;
@@ -135,6 +145,7 @@ class UnitDetails extends React.Component {
           </p>
           {privateList}
         </div>
+        {this._generateCharmPlugin()}
         <ButtonRow
           buttons={buttons} />
       </div>
@@ -145,6 +156,7 @@ class UnitDetails extends React.Component {
 UnitDetails.propTypes = {
   acl: PropTypes.object.isRequired,
   changeState: PropTypes.func.isRequired,
+  charmPlugin: PropTypes.object,
   destroyUnits: PropTypes.func.isRequired,
   previousComponent: PropTypes.string,
   service: PropTypes.object.isRequired,

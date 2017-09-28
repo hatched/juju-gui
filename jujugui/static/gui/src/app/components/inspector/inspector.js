@@ -148,6 +148,7 @@ class Inspector extends React.Component {
           component:
             <UnitDetails
               acl={this.props.acl}
+              charmPlugin={this.props.charmPlugin}
               destroyUnits={this.props.destroyUnits}
               service={service}
               changeState={changeState}
@@ -382,6 +383,7 @@ Inspector.propTypes = {
   addNotification: PropTypes.func.isRequired,
   appState: PropTypes.object.isRequired,
   charm: PropTypes.object.isRequired,
+  charmPlugin: PropTypes.object,
   clearState: PropTypes.func.isRequired,
   createMachinesPlaceUnits: PropTypes.func.isRequired,
   createRelation: PropTypes.func.isRequired,

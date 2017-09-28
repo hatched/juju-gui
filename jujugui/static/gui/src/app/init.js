@@ -84,6 +84,8 @@ class GUIApp {
       @type {Object}
     */
     this._hotkeyListener = hotkeys.activate(this);
+
+    this._charmPlugins = {};
     /**
       The application database.
       @type {Object}
@@ -1604,16 +1606,27 @@ class GUIApp {
     }
   }
 
-  _loadCharmGUIIntegration(charmId, filePath) {
-    const path = this.modelAPI.getLocalCharmFileUrl(charmId, filePath);
-    const script = document.createElement('script');
-    script.src = path;
-    script.onload = function (e) {
-      console.log('onloaded', e);
-      //do stuff with the script
-    };
-    // Cannot be done with Chrome because it blocks sub resources with u/p
-    document.head.appendChild(script);
+  _loadCharmGUIIntegrations(charmId, integrationPaths) {
+    ['canvas', 'unitData'].forEach(key => {
+      let path = integrationPaths[key];
+      if (path) {
+        // Convert path to dashes from the lowercase name definition.
+        path = path.replace(/([A-Z])/g, s => `-${s.toLowerCase()}`);
+        if (!this._charmPlugins[charmId]) {
+          this._charmPlugins[charmId] = {};
+        }
+        this.modelAPI.getLocalCharmFileContents(
+          charmId, path, () => {}, response => {
+            const charmPlugin = eval(response.target.response);
+            if (charmPlugin) {
+              this._charmPlugins[charmId][charmPlugin[0]] = charmPlugin[1];
+              if (charmPlugin[0] === 'canvas') {
+                this._renderCharmCanvasUI();
+              }
+            }
+          });
+      }
+    });
   }
 
   fetchCharmIntegrations() {
@@ -1636,7 +1649,7 @@ class GUIApp {
               charmId, guiIntegration, ()=>{}, response => {
                 try {
                   const data = JSON.parse(response.target.response);
-                  this._loadCharmGUIIntegration(charmId, data.ui.path);
+                  this._loadCharmGUIIntegrations(charmId, data.ui);
                 } catch (e) {
                   console.error(e);
                 }

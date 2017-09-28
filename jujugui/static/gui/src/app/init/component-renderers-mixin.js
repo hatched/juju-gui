@@ -18,6 +18,7 @@ const viewUtils = require('../views/utils');
 const Account = require('../components/account/account');
 const AddedServicesList = require('../components/added-services-list/added-services-list');
 const Charmbrowser = require('../components/charmbrowser/charmbrowser');
+const CharmPlugin = require('../components/charm-plugin/charm-plugin');
 const DeploymentBar = require('../components/deployment-bar/deployment-bar');
 const DeploymentFlow = require('../components/deployment-flow/deployment-flow');
 const EnvSizeDisplay = require('../components/env-size-display/env-size-display');
@@ -762,6 +763,7 @@ const ComponentRenderersMixin = (superclass) => class extends superclass {
           addNotification={this._bound.addNotification}
           appState={this.state}
           charm={charm}
+          charmPlugin={this._charmPlugins}
           clearState={initUtils.clearState.bind(this, topo)}
           createMachinesPlaceUnits={viewUtils.createMachinesPlaceUnits.bind(
             this, db, model, service)}
@@ -1255,6 +1257,20 @@ const ComponentRenderersMixin = (superclass) => class extends superclass {
         topo={this.topology.topo} />,
       document.getElementById('zoom-container'));
   }
+
+  _renderCharmCanvasUI() {
+    const plugins = [];
+    for (let charmId in this._charmPlugins) {
+      if (this._charmPlugins[charmId] && this._charmPlugins[charmId].canvas) {
+        plugins.push(this._charmPlugins[charmId].canvas);
+      }
+    }
+
+    ReactDOM.render(
+      <CharmPlugin plugins={plugins}/>,
+      document.getElementById('charm-plugin')
+    );
+  }
   /**
     Render the react components.
   */
@@ -1265,6 +1281,7 @@ const ComponentRenderersMixin = (superclass) => class extends superclass {
       this.db.machines.filterByParent().length
     );
     this._renderDeploymentBar();
+    this._renderCharmCanvasUI();
     this._renderModelActions();
     this._renderProviderLogo();
     this._renderZoom();

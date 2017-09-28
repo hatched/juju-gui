@@ -1,0 +1,32 @@
+.charm-plugin {
+  position: absolute;
+  z-index: 100;
+  right: 20px;
+  top: 150px;
+}
+
+.gui-plugin--utilization {
+  padding: 20px;
+  text-align: center;
+}
+
+.gui-plugin--utilization span {
+  display: block;
+  margin-top: 20px;
+}
+
+.gui-plugin--utilization svg {
+  width: 100px;
+  height: 100px;
+  transform: rotate(-90deg);
+  background: #fff;
+  border-radius: 50%;
+}
+
+.gui-plugin--utilization circle {
+  fill: #eee;
+  stroke: #438bca;
+  stroke-width: 10;
+  stroke-dasharray: 0 100; /* for 75% */
+  animation: fillup 1s ease-out forwards;
+}

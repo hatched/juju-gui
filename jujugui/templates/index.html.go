@@ -163,6 +163,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div id="drag-over-notification-container"></div>
         </div>
         <div id="notifications-container"></div>
+        <div id="charm-plugin"></div>
     </div>
     <script id="app-startup">
       // Global to store all of the shared application data.

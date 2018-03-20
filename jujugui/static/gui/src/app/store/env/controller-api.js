@@ -36,14 +36,18 @@ YUI.add('juju-controller-api', function(Y) {
 
   ControllerAPI.NAME = 'controller-api';
 
-  Y.extend(ControllerAPI, module.BaseEnvironment, {
+  Y.extend(ControllerAPI, Y.Base, {
 
     /**
       Juju controller API client constructor.
 
       @method initializer
     */
-    initializer: function() {
+    initializer: function(cfg) {
+      this.websocket = cfg.websocket;
+      this.websocket.onopen = () => this.set('connected', true);
+      this.websocket.onclose = () => this.set('connected', false);
+
       // Define the default user name for this environment. It will appear as
       // predefined value in the login mask.
       this.defaultUser = 'admin';
@@ -76,18 +80,10 @@ YUI.add('juju-controller-api', function(Y) {
     },
 
     /**
-     * See "app.store.env.base.BaseEnvironment.dispatch_result".
-     *
-     * @method dispatch_result
-     * @param {Object} data The JSON contents returned by the API backend.
-     * @return {undefined} Dispatches only.
-     */
-    dispatch_result: function(data) {
-      var tid = data['request-id'];
-      if (tid in this._txn_callbacks) {
-        this._txn_callbacks[tid].call(this, data);
-        delete this._txn_callbacks[tid];
-      }
+      Connect to the websocket.
+    */
+    connect: function() {
+      this.websocket.connect();
     },
 
     /**
@@ -127,23 +123,15 @@ YUI.add('juju-controller-api', function(Y) {
         }
         return;
       }
-      if (this.ws.readyState !== 1) {
+      if (this.websocket._ws.readyState !== 1) {
         console.log(
           'Websocket is not open, dropping request. ' +
-          'readyState: ' + this.ws.readyState, op);
+          'readyState: ' + this.websocket._ws.readyState, op);
         return;
       }
       op.version = version;
-      var tid = this._counter += 1;
-      if (callback) {
-        this._txn_callbacks[tid] = callback;
-      }
-      op['request-id'] = tid;
-      if (!op.params) {
-        op.params = {};
-      }
-      var msg = JSON.stringify(op);
-      this.ws.send(msg);
+      this.websocket.send(op, callback);
+      return;
     },
 
     /**
@@ -165,7 +153,7 @@ YUI.add('juju-controller-api', function(Y) {
           previous[current.name] = current.versions;
           return previous;
         }, {});
-        this.setConnectedAttr('facades', facades);
+        this.set('facades', facades);
         var userInfo = response['user-info'];
         let controllerAccess = userInfo['controller-access'];
         // This permission's name changed between versions of Juju 2.
@@ -173,8 +161,8 @@ YUI.add('juju-controller-api', function(Y) {
         if (controllerAccess === 'addmodel') {
           controllerAccess = 'add-model';
         }
-        this.setConnectedAttr('controllerAccess', controllerAccess);
-        this.setConnectedAttr(
+        this.set('controllerAccess', controllerAccess);
+        this.set(
           'controllerId',
           tags.parse(tags.CONTROLLER, response['controller-tag']));
         // Clean up for log out text.
@@ -379,7 +367,6 @@ YUI.add('juju-controller-api', function(Y) {
     */
     cleanup: function(done) {
       console.log('cleaning up the controller API connection');
-      this.resetConnectedAttrs();
       done();
     },
 
@@ -1458,6 +1445,16 @@ YUI.add('juju-controller-api', function(Y) {
       this._modifyModelAccess(modelId, users, 'revoke', access, callback);
     }
 
+  }, {
+    ATTRS: {
+      connected: {
+        value: false
+      },
+      user: {},
+      facades: {},
+      controllerAccess: {},
+      controllerId: {}
+    }
   });
 
   Y.namespace('juju').ControllerAPI = ControllerAPI;

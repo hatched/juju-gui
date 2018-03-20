@@ -338,7 +338,7 @@ Browser: ${navigator.userAgent}`
         controllerAPI={
           shapeup.fromShape(this.controllerAPI, Profile.propTypes.controllerAPI)}
         controllerIP={
-          this.controllerAPI.get('socket_url')
+          this.controllerAPI.websocket.socketURL
             .replace('wss://', '').replace('ws://', '').split(':')[0]}
         controllerIsReady={this._controllerIsReady.bind(this)}
         controllerUser={this.user.controller.user}

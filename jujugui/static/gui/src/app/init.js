@@ -15,6 +15,7 @@ const cookieUtil = require('./init/cookie-util');
 const BundleImporter = require('./init/bundle-importer');
 const EndpointsController = require('./init/endpoints-controller');
 const WebHandler = require('./store/env/web-handler');
+const WS = require('./jujulib/websocket');
 
 const newBakery = require('./init/utils/bakery-utils');
 const EnvironmentView = require('./init/topology/environment');
@@ -145,7 +146,15 @@ class GUIApp {
       jujuCoreVersion: config.jujuCoreVersion,
       bundleService: this.bundleService
     };
-    const controllerOptions = Object.assign({}, modelOptions);
+    const controllerOptions = Object.assign({
+      websocket: new WS(utils.createSocketURL({
+        apiAddress: config.apiAddress,
+        template: config.controllerSocketTemplate,
+        protocol: config.socket_protocol
+      }), {
+        ws: window.jujulib.ReconnectingWebSocket
+      })
+    }, modelOptions);
     const environments = yui.juju.environments;
     modelOptions.webHandler = new WebHandler();
     /**
@@ -796,13 +805,6 @@ class GUIApp {
     this.controllerAPI.after(
       'connectedChange',
       this._controllerConnectedChangeHandler.bind(this));
-    const config = this.applicationConfig;
-    this.controllerAPI.set('socket_url',
-      utils.createSocketURL({
-        apiAddress: config.apiAddress,
-        template: config.controllerSocketTemplate,
-        protocol: config.socket_protocol
-      }));
   }
 
   /**

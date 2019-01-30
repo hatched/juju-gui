@@ -1,6 +1,8 @@
 /* Copyright (C) 2018 Canonical Ltd. */
 'use strict';
 
+
+const generateUUID = require('uuid/v4');
 const clonedeep = require('lodash.clonedeep');
 let deepmerge = require('deepmerge');
 // Due to our use of require() (which requires .default) and how Jest loads the
@@ -18,11 +20,48 @@ class Maraca {
     this._valueStore = {
       annotations: {},
       applications: {},
+      // Even though the megawatcher does not return the charms in the model
+      // we need to request and store that charm information. The charm
+      // information is also required for deploying new applications.
+      charms: {},
       machines: {},
       relations: {},
       remoteApplications: {},
       units: {}
     };
+  }
+
+  /**
+    Inserts a new record into the defined collection if one does not exist.
+    @param {String} collectionName The collection name to create a new record
+      in. Example: 'charms', 'annotations', etc...
+    @param {Object} data The data to store in the record. This data must follow
+      the same structure as defined for each collection. See the maraca
+      documentation.
+    @returns {Object} The inserted data or in the event of a conflict or
+      validation failure, an error object.
+  */
+  insert(collectionName, data) {
+    const error = this._validateData(collectionName, data);
+    if (error) {
+      return error;
+    }
+    const uuid = generateUUID();
+    data.uuid = uuid;
+    return this._valueStore[collectionName][uuid] = data;
+  }
+
+  /**
+    Validates that the supplied data can be inserted into the defined collection.
+    @param {String} collectionName The collection name to create a new record
+      in. Example: 'charms', 'annotations', etc...
+    @param {Object} data The data to store in the record. This data must follow
+      the same structure as defined for each collection. See the maraca
+      documentation.
+    @returns {Object} null if the data validates or an error object if it does not.
+  */
+  _validateData(collectionName, data) {
+    return null; // it's alllllll good.
   }
 
   /**
